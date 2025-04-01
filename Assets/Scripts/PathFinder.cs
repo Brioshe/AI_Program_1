@@ -22,6 +22,7 @@ public class PathFinder : MonoBehaviour
     public Color pathColor = Color.cyan;
     public bool isComplete;
     public int iterations = 0;
+    public int maxStored = 0;
     public void Init(GraphClass graph, GraphView graphView, Node start, Node goal)
     {
         if (start == null || goal == null || graph == null || graphView == null)
@@ -58,27 +59,27 @@ public class PathFinder : MonoBehaviour
         iterations = 0;
     }
 
-    public void showColors(GraphView graphView, Node start, Node goal)
+    public void showColors(GraphView graphView, Node start, Node goal, List<Node> frontierNodes, List<Node> exploredNodes, List<Node> pathNodes) 
     {
         if (graphView == null || start == null || goal == null)
         {
             return;
         } 
 
-        NodeView startNodeView = m_graphView.nodeViews[start.xIndex, start.yIndex];
-        NodeView goalNodeView = m_graphView.nodeViews[goal.xIndex, goal.yIndex];
+        NodeView startNodeView = graphView.nodeViews[start.xIndex, start.yIndex];
+        NodeView goalNodeView = graphView.nodeViews[goal.xIndex, goal.yIndex];
 
-        if (m_frontierNodes != null)
+        if (frontierNodes != null)
         {
-            graphView.ColorNodes(m_frontierNodes.ToList(), frontierColor);
+            graphView.ColorNodes(frontierNodes, frontierColor);
         }
-        if (m_exploredNodes != null)
+        if (exploredNodes != null)
         {
-            graphView.ColorNodes(m_exploredNodes, exploredColor);
+            graphView.ColorNodes(exploredNodes, exploredColor);
         }
-        if (m_pathNodes != null)
+        if (pathNodes != null)
         {
-            graphView.ColorNodes(m_pathNodes, pathColor);
+            graphView.ColorNodes(pathNodes, pathColor);
         }
         if (startNodeView != null)
         {
@@ -92,10 +93,9 @@ public class PathFinder : MonoBehaviour
 
     public void ShowColors()
     {
-        showColors(m_graphView, m_startNode, m_goalNode);
+        showColors(m_graphView, m_startNode, m_goalNode, m_frontierNodes.ToList(), m_exploredNodes, m_pathNodes);
     }
 
-    // Breadth First Search
     public IEnumerator SearchRoutine(float timeStep = 0.1f)
     {
         yield return null;
@@ -122,9 +122,17 @@ public class PathFinder : MonoBehaviour
             {
                 isComplete = true;
             }
+
+            int totalExplored = m_exploredNodes.Count + m_frontierNodes.Count;
+
+            Debug.Log("Iterations: " + iterations);
+            Debug.Log("Explored Nodes: " + totalExplored);
+            Debug.Log("Max Frontier: " + maxStored);
+            
             ShowColors();
         }
     }
+
     private void ExpandFrontier(Node node)
     {
         for (int i = 0; i < node.neighbors.Count; i++)
@@ -133,12 +141,17 @@ public class PathFinder : MonoBehaviour
             {
                 node.neighbors[i].previous = node;
                 m_frontierNodes.Enqueue(node.neighbors[i]);
+                if (m_frontierNodes.Count() > maxStored) 
+                {
+                    maxStored = m_frontierNodes.Count();
+                } 
             }
         }
     }
 
     public List<Node> GetPathNodes(Node goalNode)
     {
+        int pathlength = 0;
         List<Node> path = new List<Node>();
         if (goalNode == null)
         {
@@ -148,9 +161,11 @@ public class PathFinder : MonoBehaviour
         Node currentNode = goalNode.previous;
         while (currentNode != null)
         {
+            pathlength++;
             path.Insert(0, currentNode);
             currentNode = currentNode.previous;
         }
+        Debug.Log("Path Length: " + pathlength);
         return path;
     }
 }
