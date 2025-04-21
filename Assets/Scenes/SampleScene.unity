@@ -461,6 +461,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &224551378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224551380}
+  - component: {fileID: 224551379}
+  m_Layer: 0
+  m_Name: Dijkstra
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &224551379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224551378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8278731c67bb9459efaa8bd0fbd281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isComplete: 0
+  iterations: 0
+  maxStored: 0
+--- !u!4 &224551380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224551378}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.62083924, y: -8.219864, z: -5.4234095}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &274500021
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,6 +1033,7 @@ MonoBehaviour:
   pathColor: {r: 0, g: 0.81583977, b: 1, a: 1}
   isComplete: 0
   iterations: 0
+  maxStored: 0
 --- !u!4 &539957439
 Transform:
   m_ObjectHideFlags: 0
@@ -1255,6 +1303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isComplete: 0
   iterations: 0
+  maxStored: 0
 --- !u!4 &752687454
 Transform:
   m_ObjectHideFlags: 0
@@ -2095,6 +2144,7 @@ MonoBehaviour:
   DFSAlgorithm: {fileID: 2020553823}
   GreedyAlgorithm: {fileID: 752687453}
   AstarAlgorithm: {fileID: 1436806888}
+  DSAlgorithm: {fileID: 224551379}
   startX: 0
   startY: 0
   goalX: 15
@@ -2148,6 +2198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isComplete: 0
   iterations: 0
+  maxStored: 0
 --- !u!4 &1436806889
 Transform:
   m_ObjectHideFlags: 0
@@ -2268,6 +2319,9 @@ MonoBehaviour:
       m_Image: {fileID: 0}
       m_Color: {r: 0, g: 0, b: 0, a: 0.85882354}
     - m_Text: A* Heuristic
+      m_Image: {fileID: 0}
+      m_Color: {r: 0, g: 0, b: 0, a: 0.85882354}
+    - m_Text: Dijkstra
       m_Image: {fileID: 0}
       m_Color: {r: 0, g: 0, b: 0, a: 0.85882354}
   m_OnValueChanged:
@@ -2641,6 +2695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isComplete: 0
   iterations: 0
+  maxStored: 0
 --- !u!4 &2020553824
 Transform:
   m_ObjectHideFlags: 0
@@ -2806,5 +2861,6 @@ SceneRoots:
   - {fileID: 2020553824}
   - {fileID: 752687454}
   - {fileID: 1436806889}
+  - {fileID: 224551380}
   - {fileID: 723781621}
   - {fileID: 1259277491}

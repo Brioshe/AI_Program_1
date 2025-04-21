@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public DFS DFSAlgorithm;
     public Greedy GreedyAlgorithm;
     public AStar AstarAlgorithm;
+    public Dijkstra DSAlgorithm;
     public int startX = 0;
     public int startY = 0;
     public int goalX = 3;
@@ -27,7 +28,8 @@ public class GameController : MonoBehaviour
         DFS,
         Greedy,
         AStarManhattan,
-        AStarEuclidean
+        AStarEuclidean,
+        Dijkstra
     }
 
     public Algorithms algorithms;
@@ -98,6 +100,11 @@ public class GameController : MonoBehaviour
             // A* Heuristic
             AstarAlgorithm.Init(pathFinder, graph, graphView, startNode, goalNode, false);
             StartCoroutine(AstarAlgorithm.AStarAlgorithm(timeStep));
+        }
+        else if (algorithms == Algorithms.Dijkstra)
+        {
+            DSAlgorithm.Init(pathFinder, graph, graphView, startNode, goalNode);
+            StartCoroutine(DSAlgorithm.DijkstraAlgorithm(timeStep));
         }
         else
         {
