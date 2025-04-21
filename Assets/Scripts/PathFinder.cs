@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using UnityEngine.Analytics;
 
 public class PathFinder : MonoBehaviour
 {
@@ -168,5 +169,23 @@ public class PathFinder : MonoBehaviour
         Debug.Log("Path Length: " + pathlength);
         return path;
     }
+
+    private Node GetNodeWithMinDistance(Queue<Node> queue, Dictionary<Node, float> distances)
+    {
+        Node minNode = null;
+        float minDistance = float.MaxValue;
+
+        foreach (Node node in queue)
+        {
+            if (distances[node] < minDistance)
+            {
+                minDistance = distances[node];
+                minNode = node;
+            }
+        }
+
+        return minNode;
+    }
 }
+
 
