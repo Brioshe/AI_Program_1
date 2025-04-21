@@ -11,15 +11,13 @@ public class Dijkstra : MonoBehaviour
     GraphClass Graph;
     GraphView GraphView;
 
-    List<Node> FrontierNodes;  // Acts as a priority queue
+    List<Node> FrontierNodes;
     List<Node> ExploredNodes;
     List<Node> PathNodes;
 
     Dictionary<Node, int> distances;
 
     public bool isComplete;
-    public int iterations = 0;
-    public int maxStored = 0;
 
     public void Init(PathFinder pathFinder, GraphClass graph, GraphView graphView, Node start, Node goal)
     {
@@ -46,7 +44,6 @@ public class Dijkstra : MonoBehaviour
         PathNodes = new List<Node>();
         distances = new Dictionary<Node, int>();
 
-        // Reset all nodes and initialize distances
         for (int y = 0; y < Graph.m_height; y++)
         {
             for (int x = 0; x < Graph.m_width; x++)
@@ -67,10 +64,8 @@ public class Dijkstra : MonoBehaviour
         {
             if (FrontierNodes.Count > 0)
             {
-                // Select the node with the lowest distance
                 Node currentNode = FrontierNodes.OrderBy(n => distances[n]).First();
                 FrontierNodes.Remove(currentNode);
-                iterations++;
 
                 if (!ExploredNodes.Contains(currentNode))
                 {
@@ -87,7 +82,6 @@ public class Dijkstra : MonoBehaviour
 
                 ExpandFrontier(currentNode);
 
-                maxStored = Mathf.Max(maxStored, FrontierNodes.Count);
                 pathFinder.showColors(GraphView, Start, Goal, FrontierNodes, ExploredNodes, PathNodes);
                 yield return new WaitForSeconds(timeStep);
             }
@@ -96,10 +90,6 @@ public class Dijkstra : MonoBehaviour
                 isComplete = true;
             }
         }
-
-        Debug.Log("Iterations: " + iterations);
-        Debug.Log("Explored Nodes: " + ExploredNodes.Count);
-        Debug.Log("Max Frontier: " + maxStored);
     }
 
     public void ExpandFrontier(Node current)
